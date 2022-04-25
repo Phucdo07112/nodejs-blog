@@ -8,6 +8,12 @@
     "watch": "node-sass --watch src/resources/scss/ --output src/public/css/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "lint-staged": {
+    "src/**/*.{js,json,scss}": "prettier --single-quote --trailing-comma all --tab-width 4 --write"
+  },
+  "hooks": {
+    "pre-commit": "lint-staged"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Phucdo07112/nodejs-blog.git"
@@ -32,6 +38,10 @@
     "node-sass": "^7.0.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "husky": "^7.0.4",
+    "lint-staged": "^12.4.0",
+    "nodemon": "^2.0.15",
+    "pretier": "^0.0.1",
+    "prettier": "^2.6.2"
   }
 }
