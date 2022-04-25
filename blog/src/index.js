@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
 const handlebars = require('express-handlebars');
@@ -31,7 +31,7 @@ app.engine(
     }),
 );
 app.set('view engine', 'hbs');
-       app.set('views', path.join(__dirname, 'resources/views'));
+app.set('views', path.join(__dirname, 'resources/views'));
 
 // Routes init: khởi tạo tuyến đường
 route(app);
