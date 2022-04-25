@@ -4,6 +4,10 @@ const morgan = require('morgan');
 const handlebars = require('express-handlebars');
 
 const route = require('./routes');
+const db = require('./config/db');
+
+// Connect to db
+db.connect();
 
 const app = express();
 const port = 3000;
@@ -21,7 +25,7 @@ app.use(express.json()); // dạng gửi từ code js lên thì có ex.json sử
 // use sử dụng
 
 // HTTP logger
-// app.use(morgan('combined'))
+app.use(morgan('combined'));
 
 // Template engine
 app.engine(
