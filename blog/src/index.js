@@ -35,18 +35,18 @@ app.engine(
     }),
 );
 app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, 'resources/views'));
+app.set('views', path.join(__dirname, 'resources', 'views'));
 
 // Routes init: khởi tạo tuyến đường
 route(app);
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
+    console.log(`App listening on port ${port}`);
 });
 
 // { Query parameters là khái niệm để giúp mình có thể truyền được dữ liệu qua chính URL của mình
 // nó tồn tại trong tất cả các METHOD sử dụng = ?value=...&value&...
 // thường được sử dụng với GET method }
 
-// GET method nhận dữ liệu từ phía server, từ phía client
-// POST method phi muốn gửi dữ liệu từ phía client lên trên phía server (người dùng lên máy chủ)
+// GET method nhận dữ liệu từ phía server, từ phía client (gửi yêu cầu lấy dữ liệu)
+// POST method phi muốn gửi dữ liệu từ phía client lên trên phía server (người dùng lên máy chủ) (gửi yêu cầu thêm dữ liệu)
