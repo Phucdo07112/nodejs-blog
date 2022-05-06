@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
+const methodOverride = require('method-override')
 const handlebars = require('express-handlebars');
 
 const route = require('./routes');
@@ -27,11 +28,17 @@ app.use(express.json()); // dạng gửi từ code js lên thì có ex.json sử
 // HTTP logger
 app.use(morgan('combined'));
 
+// override with POST having ?_method=DELETE
+app.use(methodOverride('_method'))
+
 // Template engine
 app.engine(
     'hbs',
     handlebars.engine({
         extname: '.hbs',
+        helpers: {
+            sum: function (a, b) { return a + b}
+        }
     }),
 );
 app.set('view engine', 'hbs');

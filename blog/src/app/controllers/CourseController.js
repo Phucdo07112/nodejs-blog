@@ -32,6 +32,35 @@ class CourseController {
 
 
     }
+
+    // [GET] /courses/:id/edit
+    edit(req, res, next) {
+        Course.findById(req.params.id)
+            .then(course => res.render('courses/edit', {
+                course: mongooseToObject(course)
+            }))
+            .catch(next)
+
+    }
+
+    // [PUT] /courses/:id
+    update(req, res, next) {
+        Course.updateOne({ _id: req.params.id }, req.body) // liên quan đến mongosee để update.
+            .then(() => res.redirect('/me/stored/courses')) // Truyền cho response headers một cái location, khi headers có location sẽ tự động chuyển hướng trang
+            .catch(next)
+    }
+
+    // [DELETE] /courses/:id
+    destroy(req, res, next) {
+        Course.deleteOne({ _id: req.params.id })
+            .then(() => res.redirect('back')) // quay lại trang cũ
+            .catch(next);
+    }
 }
+
+// GET: gửi yêu cầu lên server trả lại dữ liệu cho client
+// POST: gửi yêu cầu lên server lưu lại dữ liệu, tạo mới dữ liệu
+// PUT & PATCH: chỉnh sử dữ liệu (put sửa lại hết, patch sửa từng cái)
+// DELETE: xóa
 
 module.exports = new CourseController();
