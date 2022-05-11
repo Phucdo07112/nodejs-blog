@@ -52,7 +52,21 @@ class CourseController {
 
     // [DELETE] /courses/:id
     destroy(req, res, next) {
+        Course.delete({ _id: req.params.id })
+            .then(() => res.redirect('back')) // quay lại trang cũ
+            .catch(next);
+    }
+
+    // [DELETE] /courses/:id/force
+    forceDestroy(req, res, next) {
         Course.deleteOne({ _id: req.params.id })
+            .then(() => res.redirect('back')) // quay lại trang cũ
+            .catch(next);
+    }
+
+    // [PATCH] /:id/restore
+    restore(req, res, next) {
+        Course.restore({ _id: req.params.id })
             .then(() => res.redirect('back')) // quay lại trang cũ
             .catch(next);
     }

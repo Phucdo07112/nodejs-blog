@@ -22,7 +22,7 @@ class SiteController {
 
     // [GET] /news/:slug
     show(req, res) {
-        console.log(req.query.q); // hiển thị chức năng search trên URL
+        console.log(req.query); // hiển thị chức năng search trên URL
         res.render('search');
     }
 }
