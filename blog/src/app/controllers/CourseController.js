@@ -70,6 +70,29 @@ class CourseController {
             .then(() => res.redirect('back')) // quay lại trang cũ
             .catch(next);
     }
+
+    // [POST] /courses/handle-form-actions
+    handleFormActions(req, res, next) {
+        switch (req.body.action) {
+            case 'delete':
+                Course.delete({ _id: { $in: req.body.courseIds} }) //req.body.courseIds là mảng nên muốn xóa hết thì phải thêm $in
+                    .then(() => res.redirect('back')) // quay lại trang cũ
+                    .catch(next);
+                break;
+            case 'restore': // khôi phục
+                Course.restore({ _id: { $in: req.body.courseIds} })
+                    .then(() => res.redirect('back')) // quay lại trang cũ
+                    .catch(next);
+                break;
+            case 'force': //xóa vĩnh viễn tất cả
+                Course.deleteMany({ _id: { $in: req.body.courseIds} })
+                    .then(() => res.redirect('back')) // quay lại trang cũ
+                    .catch(next);
+                break;
+            default:
+                res.json({ message: 'Action is invalid'})
+        }
+    }
 }
 
 // GET: gửi yêu cầu lên server trả lại dữ liệu cho client
