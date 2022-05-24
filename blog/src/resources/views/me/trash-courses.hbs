@@ -14,7 +14,7 @@
       <option value="restore">Khôi Phục</option>
       <option value="force">Xóa vĩnh viễn</option>
     </select>
-    <button class="btn btn-primary check-all-submit-btn disabled" type="submit">Button</button>
+    <button class="btn btn-primary check-all-submit-btn" disabled="disabled" type="submit">Button</button>
   </div>
     <table class="table mt-4">
         <thead>
@@ -127,21 +127,14 @@
       renderCheckAllSubmitBtn()
     })
 
-    // Check all submit button click
-    checkAllSubmitBtn.on('submit', function (e) { // khi sự kiên submit diễn ra thì nó lọt vào đây
-      var isSubmittable = !$(this).hasClass('disabled'); // kiểm tra nút  có class disabled thì submit: trả ra giá trị true && false
-      if(!isSubmittable) { // nếu false: là ko đủ kiều kiện submit thì e.pre() bỏ hành vi mặc định
-        e.preventDefault();
-      }
-    }) ;
 
     // Re-render check all submit button
     function renderCheckAllSubmitBtn() {
      var isChecked = $('input[name="courseIds[]"]:checked').length;
      if(isChecked > 0) {
-       checkAllSubmitBtn.removeClass('disabled');
+       checkAllSubmitBtn.attr('disabled', false) // thêm attribult là disable hoặc gỡ
      } else {
-       checkAllSubmitBtn.addClass('disabled')
+       checkAllSubmitBtn.attr('disabled', true)
      }
     }
 </script>
