@@ -33,16 +33,16 @@ app.use(morgan('combined'));
 // override with POST having ?_method=DELETE : ghi đè bằng POST có? _method = DELETE
 app.use(methodOverride('_method')) // đứng giữa xem có getparameter truyên lên là _method không nếu có thì làm đoạn code override: điều hướng lại router của nó
 
-app.use(bacBaoVe); // nếu có đường đẫn ở trước thì chỉ áp dụng cho đường dẫn đó còn không thì áp dụng toàn bộ ứng đụng
-function bacBaoVe( req, res, next) {
-    if(['vevip','vethuong'].includes(req.query.ve)) {
-        req.face = 'dung roi con trai' // chỉnh sửa middleware
-        return next();
-    }
-    res.status(403).json({
-        message: 'co cai nit',
-    })
-}
+// app.use(bacBaoVe); // nếu có đường đẫn ở trước thì chỉ áp dụng cho đường dẫn đó còn không thì áp dụng toàn bộ ứng đụng
+// function bacBaoVe( req, res, next) {
+//     if(['vevip','vethuong'].includes(req.query.ve)) {
+//         req.face = 'dung roi con trai' // chỉnh sửa middleware
+//         return next();
+//     }
+//     res.status(403).json({
+//         message: 'co cai nit',
+//     })
+// }
 // Template engine
 app.engine(
     'hbs',
