@@ -4,7 +4,14 @@ class MeController {
     // [GET] /me/stored/courses
     storedCourses(req, res, next) {
 
-        Promise.all([Course.find({}), Course.countDocumentsDeleted({})])
+        let courseQuery = Course.find({});
+        if(req.query.hasOwnProperty('_sort')) { // kiểm tra có _sort ko nếu có thì chạy
+            courseQuery = courseQuery.sort({ // sắp xếp theo thứ tự column = type
+                [req.query.column]: req.query.type
+            });
+        }
+
+        Promise.all([courseQuery, Course.countDocumentsDeleted({})]) // deletedCount là số khóa học đã xóa, courses là dữ liệu khóa học db
             .then(([courses,deletedCount]) => 
                     res.render('me/stored-courses', 
                     {

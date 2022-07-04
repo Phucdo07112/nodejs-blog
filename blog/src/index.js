@@ -3,6 +3,7 @@ const path = require('path');
 const morgan = require('morgan');
 const methodOverride = require('method-override')
 const handlebars = require('express-handlebars');
+const SortMiddleware = require('./app/middlewares/SortMiddleware');
 
 const route = require('./routes');
 const db = require('./config/db');
@@ -33,6 +34,8 @@ app.use(morgan('combined'));
 // override with POST having ?_method=DELETE : ghi đè bằng POST có? _method = DELETE
 app.use(methodOverride('_method')) // đứng giữa xem có getparameter truyên lên là _method không nếu có thì làm đoạn code override: điều hướng lại router của nó
 
+// Custom middlewares
+app.use(SortMiddleware); // chạy trên tất cả các tuyến đường
 // app.use(bacBaoVe); // nếu có đường đẫn ở trước thì chỉ áp dụng cho đường dẫn đó còn không thì áp dụng toàn bộ ứng đụng
 // function bacBaoVe( req, res, next) {
 //     if(['vevip','vethuong'].includes(req.query.ve)) {
@@ -48,8 +51,30 @@ app.engine(
     'hbs',
     handlebars.engine({
         extname: '.hbs',
-        helpers: {
-            sum: function (a, b) { return a + b}
+        helpers: { // chạy hàm không cần phải code ui
+            sum: function (a, b) { return a + b},
+            sortable: (field, sort) => {
+                const sortType = field === sort.column ? sort.type : 'default';
+                // kiểm tra thử field có === column truyền vào hay không nếu bằng thì trả về type dố còn không bằng thì default 
+                // (để chỉ lấy ra đúng icon đc sort) field là column truyền vào, sort là middleware chứa type là default
+                let icons = {
+                    default: 'oi oi-elevator',
+                    asc: 'oi oi-sort-ascending',
+                    desc: 'oi oi-sort-descending',
+                }
+                let types = {
+                    default: 'desc',
+                    asc: 'desc',
+                    desc: 'asc',
+                }
+                const icon = icons[sortType];
+                const type = types[sortType];
+                return `
+                    <a href="?_sort&column=${field}&type=${type}">
+                       <span class="${icon}" title="elevator" aria-hidden="true"></span>
+                    </a>
+                `;
+            },
         }
     }),
 );

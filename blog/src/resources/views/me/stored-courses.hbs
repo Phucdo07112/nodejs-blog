@@ -20,9 +20,15 @@
         <thead>
             <tr>
             <th scope="col">#</th>
-            <th scope="col">Tên khóa hoc</th>
-            <th scope="col">Trình độ</th>
-            <th scope="col">Thời gian tạo</th>
+            <th scope="col">Tên khóa hoc
+              {{{sortable 'name' _sort}}}
+            </th>
+            <th scope="col">Trình độ
+              {{{sortable 'level' _sort}}}
+            </th>
+            <th scope="col">Thời gian tạo
+              {{{sortable 'createdAt' _sort}}}
+            </th>
             </tr>
         </thead>
         <tbody>
